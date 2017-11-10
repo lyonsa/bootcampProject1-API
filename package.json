@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/lyonsa/bootcampProject1-API",
-  "author": "<charlesc.kenney@gmail.com>",
+  "author": "group",
   "license": "MIT",
   "scripts": {
     "build": "backpack build",
@@ -22,7 +22,8 @@
     "express-promise-router": "^2.0.0",
     "helmet": "^3.9.0",
     "hpp": "^0.2.2",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "source-map-support": "^0.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
