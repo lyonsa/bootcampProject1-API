@@ -6,7 +6,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 
-import routes from './routes'
+import gameRoute from './routes/game'
+
 
 const PROD = process.env.NODE_ENV === 'production'
 const PORT = process.env.PORT || 3000
@@ -31,7 +32,7 @@ app
 
 // mount routes
 app
-	.use('/game', routes.gameRoute)
+	.use('/game', gameRoute)
 
 // listen for traffic
 app.listen(PORT)
