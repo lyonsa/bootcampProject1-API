@@ -1,5 +1,5 @@
 import axios from 'axios'
-import boom from 'boom'
+import boom, { badGateway } from 'boom'
 
 export default async (queryUrl) => {
 	try {
@@ -11,6 +11,6 @@ export default async (queryUrl) => {
 		return data.results
 	} catch (err) {
 		// rethrow as external error
-		throw new boom.badGateway('error fetching questions')
+		throw badGateway('error fetching questions')
 	}
 }

@@ -1,3 +1,5 @@
+import { badRequest } from 'boom'
+
 const BASE_URL = 'https://opentdb.com/api.php?amount=5'
 
 // @enum 
@@ -22,7 +24,7 @@ const categoryMapper = (category) => {
 		case 'mythology': return 20
 		case 'sports': return 21
 		case 'geography': return 22
-		default: throw new error('invalid trivia category')
+		default: throw badRequest('invalid category')
 	}
 }
 

@@ -1,6 +1,6 @@
 import Router from 'express-promise-router'
 import axios from 'axios'
-import boom from 'boom'
+import boom, { badRequest } from 'boom'
 
 import { makeQuery, fetchQuestions } from '../utils'
 
@@ -16,11 +16,11 @@ router.post('/start-game', async (req, res, next) => {
 	const { uid1, uid2, category, difficulty } = req.body
 	// validate parameters
 	if (!uid1) {
-		next(new boom.badRequest('uid1 is required'))
+		next(badRequest('uid1 is required'))
 	} else if (!uid2) {
-		next(new boom.badRequest('uid2 is required'))
+		next(badRequest('uid2 is required'))
 	} else if (!category) {
-		next(new boom.badRequest('category is required'))
+		next(badRequest('category is required'))
 	}
 	// make query url
 	const query = makeQuery(category, difficulty)

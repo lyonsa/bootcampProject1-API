@@ -67,22 +67,22 @@ module.exports =
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("boom");
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(14);
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("axios");
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("boom");
+module.exports = require("axios");
 
 /***/ }),
 /* 3 */
@@ -126,9 +126,15 @@ var _compression = __webpack_require__(11);
 
 var _compression2 = _interopRequireDefault(_compression);
 
-var _game = __webpack_require__(13);
+var _routes = __webpack_require__(12);
 
-var _game2 = _interopRequireDefault(_game);
+var routes = _interopRequireWildcard(_routes);
+
+var _middleware = __webpack_require__(19);
+
+var middleware = _interopRequireWildcard(_middleware);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -139,13 +145,13 @@ var PORT = process.env.PORT || 3000;
 var app = (0, _express2.default)();
 
 // mount middleware
-app.use((0, _helmet2.default)()).use((0, _hpp2.default)()).use((0, _compression2.default)()).use((0, _morgan2.default)(PROD ? 'combined' : 'dev')).use(_bodyParser2.default.json()).use(_bodyParser2.default.urlencoded({ extended: true })).use((0, _cors2.default)());
+app.use((0, _helmet2.default)()).use((0, _hpp2.default)()).use((0, _compression2.default)()).use((0, _morgan2.default)(PROD ? 'combined' : 'dev')).use(_bodyParser2.default.json()).use((0, _cors2.default)());
 
 // disable some headers
 app.disable('x-powered-by').disable('etag');
 
 // mount routes
-app.use('/game', _game2.default);
+app.use('/game', routes.gameRoute).use(middleware.notFound).use(middleware.errorHandler);
 
 // listen for traffic
 app.listen(PORT);
@@ -197,7 +203,28 @@ module.exports = require("body-parser");
 module.exports = require("compression");
 
 /***/ }),
-/* 12 */,
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _game = __webpack_require__(13);
+
+Object.defineProperty(exports, 'gameRoute', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_game).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -208,7 +235,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _regenerator = __webpack_require__(0);
+var _regenerator = __webpack_require__(1);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
@@ -216,11 +243,11 @@ var _expressPromiseRouter = __webpack_require__(15);
 
 var _expressPromiseRouter2 = _interopRequireDefault(_expressPromiseRouter);
 
-var _axios = __webpack_require__(1);
+var _axios = __webpack_require__(2);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _boom = __webpack_require__(2);
+var _boom = __webpack_require__(0);
 
 var _boom2 = _interopRequireDefault(_boom);
 
@@ -250,11 +277,11 @@ router.post('/start-game', function () {
 						// validate parameters
 
 						if (!uid1) {
-							next(new _boom2.default.badRequest('uid1 is required'));
+							next((0, _boom.badRequest)('uid1 is required'));
 						} else if (!uid2) {
-							next(new _boom2.default.badRequest('uid2 is required'));
+							next((0, _boom.badRequest)('uid2 is required'));
 						} else if (!category) {
-							next(new _boom2.default.badRequest('category is required'));
+							next((0, _boom.badRequest)('category is required'));
 						}
 						// make query url
 						query = (0, _utils.makeQuery)(category, difficulty);
@@ -339,6 +366,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _boom = __webpack_require__(0);
+
 var BASE_URL = 'https://opentdb.com/api.php?amount=5';
 
 // @enum 
@@ -372,7 +402,7 @@ var categoryMapper = function categoryMapper(category) {
 		case 'geography':
 			return 22;
 		default:
-			throw new error('invalid trivia category');
+			throw (0, _boom.badRequest)('invalid category');
 	}
 };
 
@@ -402,15 +432,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _regenerator = __webpack_require__(0);
+var _regenerator = __webpack_require__(1);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _axios = __webpack_require__(1);
+var _axios = __webpack_require__(2);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _boom = __webpack_require__(2);
+var _boom = __webpack_require__(0);
 
 var _boom2 = _interopRequireDefault(_boom);
 
@@ -447,7 +477,7 @@ exports.default = function () {
 					case 10:
 						_context.prev = 10;
 						_context.t0 = _context['catch'](0);
-						throw new _boom2.default.badGateway('error fetching questions');
+						throw (0, _boom.badGateway)('error fetching questions');
 
 					case 13:
 					case 'end':
@@ -461,6 +491,89 @@ exports.default = function () {
 		return _ref.apply(this, arguments);
 	};
 }();
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _errorHandler = __webpack_require__(20);
+
+Object.defineProperty(exports, 'errorHandler', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_errorHandler).default;
+  }
+});
+
+var _notFound = __webpack_require__(21);
+
+Object.defineProperty(exports, 'notFound', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_notFound).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _boom = __webpack_require__(0);
+
+var _boom2 = _interopRequireDefault(_boom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function ($err, req, res, next) {
+  // get boom error
+  // convert to error 500 if not boom error
+  var err = $err.isBoom ? $err : (0, _boom.badImplementation)('Something broke ):');
+  var _err$output$payload = err.output.payload,
+      message = _err$output$payload.message,
+      statusCode = _err$output$payload.statusCode,
+      error = _err$output$payload.error;
+  // log error
+
+  console.error(error + ': ' + message);
+  console.error($err.stack);
+  res.status(statusCode).json({
+    error: error,
+    message: message
+  });
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _boom = __webpack_require__(0);
+
+exports.default = function (req, res, next) {
+  next((0, _boom.notFound)('The endpoint you requested was not found.'));
+};
 
 /***/ })
 /******/ ]);

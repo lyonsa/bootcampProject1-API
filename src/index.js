@@ -6,8 +6,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import compression from 'compression'
 
-import gameRoute from './routes/game'
-
+import * as routes from './routes'
+import * as middleware from './middleware'
 
 const PROD = process.env.NODE_ENV === 'production'
 const PORT = process.env.PORT || 3000
@@ -22,7 +22,6 @@ app
 	.use(compression())
 	.use(morgan(PROD ? 'combined' : 'dev'))
 	.use(bodyParser.json())
-	.use(bodyParser.urlencoded({ extended: true }))
 	.use(cors())
 
 // disable some headers
@@ -32,7 +31,9 @@ app
 
 // mount routes
 app
-	.use('/game', gameRoute)
+	.use('/game', routes.gameRoute)
+	.use(middleware.notFound)
+	.use(middleware.errorHandler)
 
 // listen for traffic
 app.listen(PORT)
