@@ -23,11 +23,12 @@
     "helmet": "^3.9.0",
     "hpp": "^0.2.2",
     "morgan": "^1.9.0",
-    "source-map-support": "^0.5.0"
+    "source-map-support": "^0.5.0",
+    "backpack-core": "^0.4.3",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "backpack-core": "^0.4.3"
+
   }
 }
