@@ -1,0 +1,32 @@
+{
+  "name": "bootcamp-project-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lyonsa/bootcampProject1-API",
+  "author": "<charlesc.kenney@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "backpack build",
+    "dev": "NODE_ENV=development backpack",
+    "start": "NODE_ENV=production node ./build/main",
+    "test": "NODE_ENV=test PORT=6788 jest"
+  },
+  "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
+    "boom": "^7.1.1",
+    "compression": "^1.7.1",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0",
+    "helmet": "^3.9.0",
+    "hpp": "^0.2.2",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "backpack-core": "^0.4.3"
+  }
+}
