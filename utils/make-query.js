@@ -1,6 +1,6 @@
 import { badRequest } from 'boom'
 
-const BASE_URL = 'https://opentdb.com/api.php?amount=5'
+const BASE_URL = 'https://opentdb.com/api.php?amount=5&type=multiple'
 
 // @enum 
 const difficulties = [
