@@ -1,6 +1,10 @@
 {
-    "presets": [
-      "backpack-core/babel",
-      "env"
-    ]
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "6"
+      }
+    }],
+    "stage-0"
+  ]
 }
