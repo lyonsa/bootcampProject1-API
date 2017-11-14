@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _boom = require('boom');
 
-const BASE_URL = 'https://opentdb.com/api.php?amount=5';
+const BASE_URL = 'https://opentdb.com/api.php?amount=5&type=multiple';
 
 // @enum 
 const difficulties = ['easy', 'medium', 'hard'];
