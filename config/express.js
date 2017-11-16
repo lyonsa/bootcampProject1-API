@@ -21,6 +21,7 @@ app
 	.use(hpp())
 	.use(compression())
 	.use(morgan(PROD ? 'combined' : 'dev'))
+	.use(bodyParser.urlencoded({ extended: true }))
 	.use(bodyParser.json())
 	.use(cors())
 
@@ -31,7 +32,8 @@ app
 
 // mount routes
 app
-	.use('/game', routes.gameRoute)
+	.use(routes.rootRoute)
+	.use('/games', routes.gameRoute)
 	.use(middleware.notFound)
 	.use(middleware.errorHandler)
 
