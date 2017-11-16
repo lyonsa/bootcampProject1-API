@@ -43,7 +43,7 @@ router.get('/', (() => {
 			const snap = yield gamesRef.once('value');
 			const games = yield snap.val();
 			// format to keys
-			const gids = Object.keys(games);
+			const gids = games ? Object.keys(games) : [];
 			res.status(200).json({ games: gids });
 		} catch (err) {
 			console.error();
