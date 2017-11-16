@@ -10,7 +10,7 @@ import * as routes from '../routes'
 import * as middleware from '../middleware'
 
 const PROD = process.env.NODE_ENV === 'production'
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 
 // initalize express app
 const app = express()

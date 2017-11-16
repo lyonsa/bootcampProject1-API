@@ -23,10 +23,10 @@ router.get('/', async (req, res, next) => {
 		const snap = await gamesRef.once('value')
 		const games = await snap.val()
 		// format to keys
-		const gids = Object.keys(games)
+		const gids = games ? Object.keys(games) : []
 		res.status(200).json({ games: gids })
 	} catch (err) {
-		console.error()
+		console.error(err)
 		next(badGateway('Could not fetch games'))
 	}
 })
