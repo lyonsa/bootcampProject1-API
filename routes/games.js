@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
 		const gids = games ? Object.keys(games) : []
 		res.status(200).json({ games: gids })
 	} catch (err) {
-		console.error()
+		console.error(err)
 		next(badGateway('Could not fetch games'))
 	}
 })
