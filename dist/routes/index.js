@@ -4,12 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _game = require('./game');
+var _games = require('./games');
 
 Object.defineProperty(exports, 'gameRoute', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_game).default;
+    return _interopRequireDefault(_games).default;
+  }
+});
+
+var _root = require('./root');
+
+Object.defineProperty(exports, 'rootRoute', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_root).default;
   }
 });
 

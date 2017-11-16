@@ -47,13 +47,13 @@ const PORT = process.env.PORT || 3000;
 const app = (0, _express2.default)();
 
 // mount middleware
-app.use((0, _helmet2.default)()).use((0, _hpp2.default)()).use((0, _compression2.default)()).use((0, _morgan2.default)(PROD ? 'combined' : 'dev')).use(_bodyParser2.default.json()).use((0, _cors2.default)());
+app.use((0, _helmet2.default)()).use((0, _hpp2.default)()).use((0, _compression2.default)()).use((0, _morgan2.default)(PROD ? 'combined' : 'dev')).use(_bodyParser2.default.urlencoded({ extended: true })).use(_bodyParser2.default.json()).use((0, _cors2.default)());
 
 // disable some headers
 app.disable('x-powered-by').disable('etag');
 
 // mount routes
-app.use('/game', routes.gameRoute).use(middleware.notFound).use(middleware.errorHandler);
+app.use(routes.rootRoute).use('/games', routes.gameRoute).use(middleware.notFound).use(middleware.errorHandler);
 
 // listen for traffic
 app.listen(PORT);
