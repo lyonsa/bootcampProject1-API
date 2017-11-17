@@ -52,4 +52,14 @@ router.post('/init-game', async (req, res, next) => {
 	})
 })
 
+router.get('/get-questions', async (req, res, next) => {
+	// get parameters
+	const query = makeQuery('computer science')
+	const questions = await fetchQuestions(query)
+	res.status(201).json({
+		questions,
+		success: true,
+	})
+})
+
 export default router

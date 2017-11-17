@@ -87,5 +87,21 @@ router.post('/init-game', (() => {
 	};
 })());
 
+router.get('/get-questions', (() => {
+	var _ref3 = _asyncToGenerator(function* (req, res, next) {
+		// get parameters
+		const query = (0, _utils.makeQuery)('computer science');
+		const questions = yield (0, _utils.fetchQuestions)(query);
+		res.status(201).json({
+			questions,
+			success: true
+		});
+	});
+
+	return function (_x7, _x8, _x9) {
+		return _ref3.apply(this, arguments);
+	};
+})());
+
 exports.default = router;
 //# sourceMappingURL=games.js.map
