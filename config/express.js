@@ -34,6 +34,7 @@ app
 app
 	.use(routes.rootRoute)
 	.use('/games', routes.gameRoute)
+	.use('/players', routes.playerRoute)
 	.use(middleware.notFound)
 	.use(middleware.errorHandler)
 

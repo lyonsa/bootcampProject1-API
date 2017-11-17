@@ -56,8 +56,50 @@ router.get('/', (() => {
 	};
 })());
 
-router.post('/init-game', (() => {
+router.get('/:gid', (() => {
 	var _ref2 = _asyncToGenerator(function* (req, res, next) {
+		// get parameters
+		const gid = req.params.gid;
+		const withPlayers = req.query.withPlayers;
+
+		console.log('withplayers -> ', withPlayers);
+		// get game
+		const gameRef = _firebase.firebaseGames.child(gid);
+		const snap = yield gameRef.once('value');
+		const game = snap.val();
+		if (withPlayers) {
+			const uid1 = game.uid1,
+			      uid2 = game.uid2;
+
+			const player1 = yield getPlayer(uid1);
+			const player2 = yield getPlayer(uid2);
+			return res.status(200).json({
+				game,
+				player1,
+				player2
+			});
+		}
+	});
+
+	return function (_x4, _x5, _x6) {
+		return _ref2.apply(this, arguments);
+	};
+})());
+
+const getPlayer = (() => {
+	var _ref3 = _asyncToGenerator(function* (uid) {
+		const ref = _firebase.firebasePlayers.child(uid);
+		const snap = yield ref.once('value');
+		return snap.val();
+	});
+
+	return function getPlayer(_x7) {
+		return _ref3.apply(this, arguments);
+	};
+})();
+
+router.post('/init-game', (() => {
+	var _ref4 = _asyncToGenerator(function* (req, res, next) {
 		// get parameters
 		var _req$body = req.body;
 		const category = _req$body.category,
@@ -82,13 +124,13 @@ router.post('/init-game', (() => {
 		});
 	});
 
-	return function (_x4, _x5, _x6) {
-		return _ref2.apply(this, arguments);
+	return function (_x8, _x9, _x10) {
+		return _ref4.apply(this, arguments);
 	};
 })());
 
 router.get('/get-questions', (() => {
-	var _ref3 = _asyncToGenerator(function* (req, res, next) {
+	var _ref5 = _asyncToGenerator(function* (req, res, next) {
 		// get parameters
 		const query = (0, _utils.makeQuery)('computer science');
 		const questions = yield (0, _utils.fetchQuestions)(query);
@@ -98,8 +140,8 @@ router.get('/get-questions', (() => {
 		});
 	});
 
-	return function (_x7, _x8, _x9) {
-		return _ref3.apply(this, arguments);
+	return function (_x11, _x12, _x13) {
+		return _ref5.apply(this, arguments);
 	};
 })());
 

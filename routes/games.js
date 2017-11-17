@@ -3,7 +3,7 @@ import axios from 'axios'
 import boom, { badRequest, badGateway } from 'boom'
 
 import { makeQuery, fetchQuestions } from '../utils'
-import { firebaseGames } from '../firebase'
+import { firebaseGames, firebasePlayers } from '../firebase'
 
 const router = Router()
 
@@ -30,6 +30,33 @@ router.get('/', async (req, res, next) => {
 		next(badGateway('Could not fetch games'))
 	}
 })
+
+router.get('/:gid', async (req, res, next) => {
+	// get parameters
+	const { gid } = req.params
+	const { withPlayers } = req.query
+	console.log('withplayers -> ', withPlayers)
+	// get game
+	const gameRef = firebaseGames.child(gid)
+	const snap = await gameRef.once('value')
+	const game = snap.val()
+	if (withPlayers) {
+		const { uid1, uid2 } = game
+		const player1 = await getPlayer(uid1)
+		const player2 = await getPlayer(uid2)
+		return res.status(200).json({
+			game,
+			player1,
+			player2
+		})
+	}
+})
+
+const getPlayer = async uid => {
+	const ref = firebasePlayers.child(uid)
+	const snap = await ref.once('value')
+	return snap.val()
+}
 
 router.post('/init-game', async (req, res, next) => {
 	// get parameters

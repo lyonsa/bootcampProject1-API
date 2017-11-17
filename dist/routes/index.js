@@ -22,5 +22,14 @@ Object.defineProperty(exports, 'rootRoute', {
   }
 });
 
+var _players = require('./players');
+
+Object.defineProperty(exports, 'playerRoute', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_players).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 //# sourceMappingURL=index.js.map

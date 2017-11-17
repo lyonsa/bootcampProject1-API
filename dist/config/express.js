@@ -53,7 +53,7 @@ app.use((0, _helmet2.default)()).use((0, _hpp2.default)()).use((0, _compression2
 app.disable('x-powered-by').disable('etag');
 
 // mount routes
-app.use(routes.rootRoute).use('/games', routes.gameRoute).use(middleware.notFound).use(middleware.errorHandler);
+app.use(routes.rootRoute).use('/games', routes.gameRoute).use('/players', routes.playerRoute).use(middleware.notFound).use(middleware.errorHandler);
 
 // listen for traffic
 app.listen(PORT);
