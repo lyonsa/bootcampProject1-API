@@ -46,7 +46,7 @@ router.get('/', (() => {
 			const gids = games ? Object.keys(games) : [];
 			res.status(200).json({ games: gids });
 		} catch (err) {
-			console.error();
+			console.error(err);
 			next((0, _boom.badGateway)('Could not fetch games'));
 		}
 	});
