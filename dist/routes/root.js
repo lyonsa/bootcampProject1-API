@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-		value: true
+	value: true
 });
 
 var _expressPromiseRouter = require('express-promise-router');
@@ -18,16 +18,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 const router = (0, _expressPromiseRouter2.default)();
 
-router.get('/queue', (() => {
-		var _ref = _asyncToGenerator(function* (req, res, next) {
-				const snap = yield _firebase.firebaseQueue.once('value');
-				const queue = snap.val();
-				res.status(200).json({ queue });
-		});
+router.get('/leaderboard', (() => {
+	var _ref = _asyncToGenerator(function* (req, res, next) {
+		const ref = _firebase.firebasePlayers;
+		const snap = yield ref.orderByChild('lifetimeScore').limitToFirst(10).once('value');
+		const leaderboard = snap.val();
+		res.status(200).json(leaderboard);
+	});
 
-		return function (_x, _x2, _x3) {
-				return _ref.apply(this, arguments);
-		};
+	return function (_x, _x2, _x3) {
+		return _ref.apply(this, arguments);
+	};
+})());
+
+router.get('/queue', (() => {
+	var _ref2 = _asyncToGenerator(function* (req, res, next) {
+		const snap = yield _firebase.firebaseQueue.once('value');
+		const queue = snap.val();
+		res.status(200).json({ queue });
+	});
+
+	return function (_x4, _x5, _x6) {
+		return _ref2.apply(this, arguments);
+	};
 })());
 
 exports.default = router;
