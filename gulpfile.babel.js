@@ -40,12 +40,12 @@ gulp.task('build', () =>
 );
 
 // start with nodemon
-gulp.task('nodemon', ['copy', 'babel'], () =>
+gulp.task('nodemon', ['copy', 'build'], () =>
   plugins.nodemon({
     script: path.join('dist', 'index.js'),
     ext: 'js',
     ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-    tasks: ['copy', 'babel']
+    tasks: ['copy', 'build']
   })
 );
 
@@ -55,6 +55,6 @@ gulp.task('dev', ['clean'], () => runSequence('nodemon'));
 // copy & compile
 gulp.task('default', ['clean'], () => {
   runSequence(
-    ['copy', 'babel']
+    ['copy', 'build']
   );
 });

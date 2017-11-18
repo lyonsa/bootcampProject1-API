@@ -8,15 +8,9 @@ var _expressPromiseRouter = require('express-promise-router');
 
 var _expressPromiseRouter2 = _interopRequireDefault(_expressPromiseRouter);
 
-var _axios = require('axios');
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _boom = require('boom');
 
-var _boom2 = _interopRequireDefault(_boom);
-
-var _utils = require('../utils');
+var _firebase = require('../firebase');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,36 +18,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 const router = (0, _expressPromiseRouter2.default)();
 
-/**
- * Start game route
- * POST `/game/start-game`
- * (public)
- */
-router.post('/start-game', (() => {
+router.get('/leaderboard', (() => {
 	var _ref = _asyncToGenerator(function* (req, res, next) {
-		// get parameters
-		var _req$body = req.body;
-		const uid1 = _req$body.uid1,
-		      uid2 = _req$body.uid2,
-		      category = _req$body.category,
-		      difficulty = _req$body.difficulty;
-		// validate parameters
-
-		if (!uid1) {
-			next((0, _boom.badRequest)('uid1 is required'));
-		} else if (!uid2) {
-			next((0, _boom.badRequest)('uid2 is required'));
-		} else if (!category) {
-			next((0, _boom.badRequest)('category is required'));
-		}
-		// make query url
-		const query = (0, _utils.makeQuery)(category, difficulty);
-		// fetch questons
-		const questions = yield (0, _utils.fetchQuestions)(query);
-		res.status(201).json({
-			questions,
-			success: true
-		});
+		const ref = _firebase.firebasePlayers;
+		const snap = yield ref.orderByChild('lifetimeScore').limitToFirst(10).once('value');
+		const leaderboard = snap.val();
+		res.status(200).json(leaderboard);
 	});
 
 	return function (_x, _x2, _x3) {
@@ -61,5 +31,17 @@ router.post('/start-game', (() => {
 	};
 })());
 
+router.get('/queue', (() => {
+	var _ref2 = _asyncToGenerator(function* (req, res, next) {
+		const snap = yield _firebase.firebaseQueue.once('value');
+		const queue = snap.val();
+		res.status(200).json({ queue });
+	});
+
+	return function (_x4, _x5, _x6) {
+		return _ref2.apply(this, arguments);
+	};
+})());
+
 exports.default = router;
-//# sourceMappingURL=game.js.map
+//# sourceMappingURL=root.js.map
